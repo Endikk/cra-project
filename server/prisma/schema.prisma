@@ -1,0 +1,53 @@
+// server/prisma/schema.prisma
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  name        String?
+  password    String
+  role        Role      @default(EMPLOYEE)
+  timeEntries TimeEntry[]
+  managerId   String?
+  manager     User?     @relation("ManagerEmployees", fields: [managerId], references: [id])
+  employees   User[]    @relation("ManagerEmployees")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String?
+  timeEntries TimeEntry[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model TimeEntry {
+  id          String    @id @default(cuid())
+  date        DateTime
+  hours       Float
+  status      String
+  description String?
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  projectId   String
+  project     Project   @relation(fields: [projectId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum Role {
+  EMPLOYEE
+  MANAGER
+  ADMIN
+}
