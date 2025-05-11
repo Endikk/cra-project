@@ -19,7 +19,7 @@ export default function LoginPage() {
     e.preventDefault();
     setIsLoading(true);
     setError("");
-    
+
     try {
       const result = await login(email, password, rememberMe);
       if (!result.success) {
@@ -33,93 +33,102 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-      <Card className="w-[400px] shadow-lg border-0">
-        <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold text-center">Bienvenue</CardTitle>
-          <CardDescription className="text-center">
-            Connectez-vous à votre compte
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            {error && (
-              <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md">
-                {error}
-              </div>
-            )}
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="exemple@email.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="focus:ring-2 focus:ring-primary"
-              />
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Mot de passe</Label>
-                <Link
-                  to="/forgot-password"
-                  className="text-sm text-primary hover:underline"
-                >
-                  Mot de passe oublié ?
-                </Link>
-              </div>
-              <Input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="focus:ring-2 focus:ring-primary"
-              />
-            </div>
-            <div className="flex items-center space-x-2">
-              <Checkbox
-                id="remember"
-                checked={rememberMe}
-                onCheckedChange={setRememberMe}
-              />
-              <Label
-                htmlFor="remember"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Se souvenir de moi
-              </Label>
-            </div>
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button
-              type="submit"
-              className="w-full bg-primary hover:bg-primary/90"
-              disabled={isLoading}
-            >
-              {isLoading ? (
-                <div className="flex items-center space-x-2">
-                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  <span>Connexion en cours...</span>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 dark:from-gray-900 dark:to-gray-800 px-4">
+      <div className="flex flex-col md:flex-row items-center bg-white shadow-2xl rounded-lg overflow-hidden max-w-5xl">
+        {/* Section gauche avec l'image */}
+        <div
+          className="hidden md:block w-1/2 bg-cover bg-center"
+          style={{ backgroundImage: "url('https://source.unsplash.com/800x600/?login,technology')" }}
+        ></div>
+
+        {/* Section droite avec le formulaire */}
+        <div className="w-full md:w-1/2 p-8 sm:p-10">
+          <Card className="w-full border-0 shadow-none">
+            <CardHeader className="space-y-2 text-center">
+              <CardTitle className="text-3xl font-extrabold text-gray-800">Bienvenue</CardTitle>
+              <CardDescription className="text-gray-600">Connectez-vous à votre compte pour continuer</CardDescription>
+            </CardHeader>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <CardContent className="space-y-4">
+                {error && (
+                  <div className="p-3 text-sm text-red-500 bg-red-50 rounded-md">
+                    {error}
+                  </div>
+                )}
+                <div className="space-y-2">
+                  <Label htmlFor="email" className="text-gray-700">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="exemple@email.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    className="focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
-              ) : (
-                "Se connecter"
-              )}
-            </Button>
-            <div className="text-center text-sm">
-              Pas encore de compte ?{" "}
-              <Link
-                to="/register"
-                className="text-primary hover:underline"
-              >
-                Créer un compte
-              </Link>
-            </div>
-          </CardFooter>
-        </form>
-      </Card>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password" className="text-gray-700">Mot de passe</Label>
+                    <Link
+                      to="/forgot-password"
+                      className="text-sm text-blue-500 hover:underline"
+                    >
+                      Mot de passe oublié ?
+                    </Link>
+                  </div>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    className="focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="remember"
+                    checked={rememberMe}
+                    onCheckedChange={setRememberMe}
+                  />
+                  <Label
+                    htmlFor="remember"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    Se souvenir de moi
+                  </Label>
+                </div>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4">
+                <Button
+                  type="submit"
+                  className="w-full bg-blue-500 text-white hover:bg-blue-600"
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <div className="flex items-center space-x-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Connexion en cours...</span>
+                    </div>
+                  ) : (
+                    "Se connecter"
+                  )}
+                </Button>
+                <div className="text-center text-sm text-gray-600">
+                  Pas encore de compte ?{" "}
+                  <Link
+                    to="/register"
+                    className="text-blue-500 hover:underline"
+                  >
+                    Créer un compte
+                  </Link>
+                </div>
+              </CardFooter>
+            </form>
+          </Card>
+        </div>
+      </div>
     </div>
   );
-} 
+}
